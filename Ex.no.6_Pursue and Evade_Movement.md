@@ -1,10 +1,11 @@
+
 # Ex.No: 6  Implementation of Steering behaviour-Pursue and Evade in Unity
-### DATE:                                                                            
-### REGISTER NUMBER : 
+### DATE:  09/04/2025                                                           
+### REGISTER NUMBER : 212223240085
 ### AIM: 
 To write a program to simulate the process of Pursue and Evade behavior in Unity using NavigationMeshAgent. 
 ### Algorithm:
-```
+
 1. Create a New Unity Project by Open the  Unity Hub and create a new 3D Project.
 2. Name the project "SteeringBehaviors" and select a location. Click Create.
 3.Open Unity Scene (default is SampleScene).
@@ -28,36 +29,48 @@ To write a program to simulate the process of Pursue and Evade behavior in Unity
     Player: Set Speed = 5.
     Pursuer: Set Speed = 4.
     Evader: Set Speed = 6.
-5. Write a script for  Player_movement behavior and save it
 
-using System.Collections;
-using System.Collections.Generic;
+5. Write a script for  Player_movement behavior and save it
+#### PlayerMovement
+```c#
+
 using UnityEngine;
 
-public class Player_movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public float speed;
+    Rigidbody rb;
+    [SerializeField] float walkSpeed = 10f;
+    float hInput;
+    float vInput;
+
     void Start()
     {
-        float xdir = Input.GetAxis("horizontal") * speed;
-        float zdir = Input.GetAxis("vertical") * speed;
-        transform.position=new Vector3(xdir,zdir);
+        rb = GetComponent<Rigidbody>();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        hInput = Input.GetAxis("Horizontal");
+        vInput = Input.GetAxis("Vertical");
+        Vector3 direction = new Vector3(hInput,rb.velocity.y,vInput);
+        rb.velocity = direction.normalized * walkSpeed;
+
     }
+
 }
-**Evader script**
+
+```
+#### Evader script
+```c#
+
+using UnityEngine;
+using UnityEngine.AI;
+
 public class Evader : MonoBehaviour
 {
-    // Start is called before the first frame update
+   // Start is called before the first frame update
     public NavMeshAgent agent;
     public Transform target;
-    public float evadespeed;
+    public float evadeSpeed;
     void Start()
     {
         agent= GetComponent<NavMeshAgent>();
@@ -65,9 +78,9 @@ public class Evader : MonoBehaviour
 
     void evade()
     {
-        Vector3 fleedir = transform.position - target.position;
-        Vector3 evadeposition = transform.position + fleedir.normalized * evadespeed;
-        agent.SetDestination(evadeposition);
+        Vector3 dir = transform.position - target.position;
+        Vector3 evadePosition = transform.position + dir.normalized * evadeSpeed;
+        agent.SetDestination(evadePosition);
 
     }
     // Update is called once per frame
@@ -76,7 +89,10 @@ public class Evader : MonoBehaviour
         evade();          
      }
 }
-**Pursuer script**
+
+```
+#### Pursuer script
+```c#
 public class Pursuer: MonoBehaviour
 {
     // Start is called before the first frame update
@@ -100,15 +116,23 @@ public class Pursuer: MonoBehaviour
         pursue();          
      }
 }
+```
 7. Attach the Script to each player,pursuer and Evader.
    Drag & Drop the Target from the Hierarchy into the "Target" field in the script component ( For pursuer and Evader).
 12. Run the game 
 13. Stop the program
     
-```
+
 ### Output:
 
+#### Player
+![Screenshot 2025-04-07 165039](https://github.com/user-attachments/assets/9253585c-4b48-4e60-8dda-9ab97a63437b)
 
+#### Evader
+![Screenshot 2025-04-07 165051](https://github.com/user-attachments/assets/c0c0be93-e047-4af9-8ad6-140cb77acbc9)
+
+#### Pursuer
+![Screenshot 2025-04-07 165059](https://github.com/user-attachments/assets/17390858-cec7-4f1b-b187-9ab04bcbe478)
 
 
 
