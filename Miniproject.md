@@ -1,6 +1,6 @@
 # Ex.No: 10  Implementation of 2D/3D game in unity
 ### DATE:    14 / 05 / 2025                                                                        
-### REGISTER NUMBER : 212223240177
+### REGISTER NUMBER : 212223240085
 ### AIM: 
 To develop a 3D platformer game in Unity using C# and to implement artificial intelligence using Unity ML-Agents Toolkit.
 
